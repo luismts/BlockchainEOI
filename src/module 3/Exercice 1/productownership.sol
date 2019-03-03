@@ -1,13 +1,13 @@
 pragma solidity >=0.4.19;
 
-import "./productattack.sol";
+import "./productsale.sol";
 import "./erc721.sol";
 import "./safemath.sol";
 
 /// @title - Un contrato que gestiona la transferencia de la propiedad de un producto.
 /// @author — Luis Matos 
 /// @dev — Compatible con la implementación de OpenZeppelin borrador de la especificación ERC721
-contract ProductOwnership is ProductAttack, ERC721 {
+contract ProductOwnership is ProductSale, ERC721 {
 
   using SafeMath for uint256;
 
@@ -25,7 +25,7 @@ contract ProductOwnership is ProductAttack, ERC721 {
     ownerProductCount[_to] = ownerProductCount[_to].add(1);
     ownerProductCount[msg.sender] = ownerProductCount[msg.sender].sub(1);
     productToOwner[_tokenId] = _to;
-    Transfer(_from, _to, _tokenId);
+    emit Transfer(_from, _to, _tokenId);
   }
 
   function transfer(address _to, uint256 _tokenId) public onlyOwnerOf(_tokenId) {
@@ -34,7 +34,7 @@ contract ProductOwnership is ProductAttack, ERC721 {
 
   function approve(address _to, uint256 _tokenId) public onlyOwnerOf(_tokenId) {
     productApprovals[_tokenId] = _to;
-    Approval(msg.sender, _to, _tokenId);
+    emit Approval(msg.sender, _to, _tokenId);
   }
 
   function takeOwnership(uint256 _tokenId) public {
