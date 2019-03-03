@@ -4,10 +4,9 @@ import "./producthelper.sol";
 
 contract ProductSale is ProductHelper {
 
-  function sale(uint _productId, uint _targetId, uint quantity) external onlyOwnerOf(_productId) {
-    Product storage byerProduct = products[_targetId];
-    
+  function sale(uint _productId, address _buyer, uint quantity) external onlyOwnerOf(_productId) {
+
     saleAndDecrease(_productId, quantity);
-    byerProduct.stock = byerProduct.stock + quantity;
+    byerProducts[_buyer].push(_productId);
   }
 }
