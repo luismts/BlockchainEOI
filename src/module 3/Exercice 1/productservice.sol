@@ -1,9 +1,8 @@
 pragma solidity >=0.4.19;
 
 import "./productfactory.sol";
-import "./valorationfactory.sol";
 
-contract ProductService is ProductFactory, ValorationFactory {
+contract ProductService is ProductFactory {
 
   modifier onlyOwnerOf(uint _productId) {
     require(msg.sender == productToOwner[_productId], "Owner not allowed");
@@ -19,7 +18,7 @@ contract ProductService is ProductFactory, ValorationFactory {
     myProduct.isAvailable = myProduct.stock <= 0 ? false : true;
   }
 
-  function saleOnProduct(uint _productId, uint quantity) public {
+  /*function saleOnProduct(uint _productId, uint quantity) public {
     saleAndDecrease(_productId, quantity);
-  }
+  }*/
 }
