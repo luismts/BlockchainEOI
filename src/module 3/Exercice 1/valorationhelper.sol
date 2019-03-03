@@ -14,14 +14,14 @@ contract ValorationHelper is ValorationService {
     valorationUpFee = _fee;
   }
 
-  function changeGeneralValoration(uint _valorationId, uint _newValoration, bytes32 comment) external onlyOwnerOf(_valorationId) {
+  function changeGeneralValoration(uint _valorationId, uint _newValoration, string calldata comment) external onlyOwnerOf(_valorationId) {
     valorations[_valorationId].delivery = _newValoration;
     valorations[_valorationId].product = _newValoration;
     valorations[_valorationId].qualityprice = _newValoration;
     valorations[_valorationId].comment = comment;
   }
 
-  function getvalorationsByOwner(address _owner) external view returns(uint[] memory) {
+  /*function getvalorationsByOwner(address _owner) external view returns(uint[] memory) {
     uint[] memory result = new uint[](ownerValorationCount[_owner]);
     uint counter = 0;
     for (uint i = 0; i < valorations.length; i++) {
@@ -31,6 +31,6 @@ contract ValorationHelper is ValorationService {
       }
     }
     return result;
-  }
+  }*/
 
 }

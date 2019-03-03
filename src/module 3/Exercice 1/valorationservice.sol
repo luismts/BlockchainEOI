@@ -12,7 +12,7 @@ contract ValorationService is ValorationFactory, ProductFactory {
 
   function setValoration(
     address _owner, uint _productId, uint _delivery, uint _product, 
-    uint _qualityprice, bytes32 _comment) internal onlyOwnerOf(_productId) {
+    uint _qualityprice, string memory _comment) internal onlyOwnerOf(_productId) {
     
     _createValoration(_owner, _delivery, _product, _qualityprice, _comment, _productId);
   }

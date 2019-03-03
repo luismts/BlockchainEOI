@@ -19,7 +19,7 @@ contract ProductHelper is ProductService {
     productUpFee = _fee;
   }
 
-  function changeName(uint _productId, bytes32 _newName) external isAvailable(_productId) onlyOwnerOf(_productId) {
+  function changeName(uint _productId, string calldata _newName) external isAvailable(_productId) onlyOwnerOf(_productId) {
     products[_productId].name = _newName;
   }
 
