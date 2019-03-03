@@ -20,12 +20,13 @@ contract ProductFactory is Ownable {
 
   mapping (uint => address) public productToOwner;
   mapping (address => uint) ownerProductCount;
+  mapping (address => uint[]) byerProducts;
 
-  function _createProduct(uint _id, bytes32 _name, uint _price, bytes32  _description, bool _isAvailable, uint _stock) internal {
-    uint id = products.push(Product(_id, _name, _price, _description, _isAvailable, _stock)) - 1;
+  function _createProduct(Product memory _product) internal {
+    uint id = products.push(_product) - 1;
     productToOwner[id] = msg.sender;
     ownerProductCount[msg.sender]++;
-    emit NewProduct(id, _name, _price, _description, _isAvailable, _stock);
+    emit NewProduct(_product.id, _product.name, _product.price, _product.description, _product.isAvailable, _product.stock);
   }
 
   /// Generate a random number between @min and @max
@@ -45,8 +46,9 @@ contract ProductFactory is Ownable {
     bytes32 description = "Not description";
     bool isAvailable = rand(0,1) == 0 ? false : true;
     uint stock = rand(0,1000);
-    
-    _createProduct(id, _name, price, description, isAvailable, stock);
+    Product memory newProduct = Product(id, _name, price, description, isAvailable, stock);
+
+    _createProduct(newProduct);
   }
 
 }
