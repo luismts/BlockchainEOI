@@ -6,7 +6,7 @@ pragma solidity >=0.4.19;
  * functions, this simplifies the implementation of "user permissions".
  */
 contract Ownable {
-  address public owner;
+  address payable public owner;
 
   event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
