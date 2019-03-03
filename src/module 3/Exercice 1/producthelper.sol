@@ -12,18 +12,18 @@ contract ProductHelper is ProductStore {
   }
 
   function withdraw() external onlyOwner {
-    owner.transfer(this.balance);
+    owner.transfer(address(this).balance);
   }
 
   function setProductUpFee(uint _fee) external onlyOwner {
     productUpFee = _fee;
   }
 
-  function changeName(uint _productId, string _newName) external isAvailable(_productId) onlyOwnerOf(_productId) {
+  function changeName(uint _productId, bytes32 _newName) external isAvailable(_productId) onlyOwnerOf(_productId) {
     products[_productId].name = _newName;
   }
 
-  function getproductsByOwner(address _owner) external view returns(uint[]) {
+  function getproductsByOwner(address _owner) external view returns(uint[] memory) {
     uint[] memory result = new uint[](ownerProductCount[_owner]);
     uint counter = 0;
     for (uint i = 0; i < products.length; i++) {
