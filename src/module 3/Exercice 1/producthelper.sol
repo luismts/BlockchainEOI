@@ -1,8 +1,8 @@
 pragma solidity >=0.4.19;
 
-import "./productstore.sol";
+import "./productservice.sol";
 
-contract ProductHelper is ProductStore {
+contract ProductHelper is ProductService {
 
   uint productUpFee = 0.001 ether;
 
