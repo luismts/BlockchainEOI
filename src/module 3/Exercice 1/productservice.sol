@@ -11,8 +11,8 @@ contract ProductService is ProductFactory {
 
   function saleAndDecrease(uint _productId, uint quantity) internal onlyOwnerOf(_productId) {
     Product storage product = products[_productId];
-    require(product.isAvailable, "Product is not available");
-    require(product.stock < quantity, "No stock available");
+    require(product.isAvailable == true, "Product is not available");
+    require(product.stock > quantity, "No stock available");
 
     product.stock = product.stock - quantity;
     product.isAvailable = product.stock <= 0 ? false : true;
