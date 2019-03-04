@@ -33,7 +33,7 @@ contract ValorationFactory is Ownable {
   }
 
   function createGeneralValoration(address _owner, uint _generalValoration, uint productId) public {
-    require(ownerValorationCount[msg.sender] == 0, "Valoration not found");    
+    //require(ownerValorationCount[msg.sender] == 0, "Valoration not found");    
     _createValoration(_owner, _generalValoration, _generalValoration, _generalValoration, "No comments", productId);
   }
 
