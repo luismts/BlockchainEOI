@@ -39,12 +39,12 @@ contract ProductFactory is Ownable {
   }
 
   function createRandomProduct(string memory _name) public {
-    require(ownerProductCount[msg.sender] == 0, "Product not found");
+    
     
     uint id = products.length + 1;
     uint price = rand(1, 10000);
     string memory description = "Not description";
-    bool isAvailable = rand(0,1) == 0 ? false : true;
+    bool isAvailable = true;
     uint stock = rand(0,1000);
     Product memory newProduct = Product(id, _name, price, description, isAvailable, stock);
 
