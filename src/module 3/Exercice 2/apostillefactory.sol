@@ -1,6 +1,8 @@
 pragma solidity >=0.4.19;
 
-contract ApostilleFactory  {
+import "./ownable.sol";
+
+contract ApostilleFactory is Ownable  {
 
   event NewApostille(uint apostilleId, string apostilleName, string apostilleUrl, bool isAvailable);
 
@@ -8,7 +10,10 @@ contract ApostilleFactory  {
     uint id;
     string name;
     string url;
+    uint timestamp;
+    string privateKey;
     bool isAvailable; 
+    bytes32 hash;
   }
 
   Apostille[] public apostilles;
@@ -17,11 +22,13 @@ contract ApostilleFactory  {
   mapping (uint => address) public apostilleToOwner;
   mapping (address => uint) public ownerApostilleCount;
 
-  function _createApostille(Apostille memory _apostille) internal {
-    uint id = apostilles.push(_apostille) - 1;
+  /// Generate an Apostille for a file
+  /// @param apostille apostille that contain the data
+  function _createApostille(Apostille memory apostille) internal {
+    uint id = apostilles.push(apostille) - 1;
     apostilleToOwner[id] = msg.sender;
     ownerApostilleCount[msg.sender]++;
-    emit NewApostille(_apostille.id, _apostille.name, _apostille.url, _apostille.isAvailable);
+    emit NewApostille(apostille.id, apostille.name, apostille.url, apostille.isAvailable);
   }
 
   /// Generate a random number between @min and @max
@@ -33,13 +40,19 @@ contract ApostilleFactory  {
     return uint(keccak256(abi.encodePacked(nonce)))%(min+max)-min;
   }
 
-  function createRandomApostille(string memory _name) public {
+  /// Generate a random Apostille for a fail file
+  /// @param name fail name value of a file
+  function createRandomApostille(string memory name) public {
     
     uint id = apostilles.length + 1;
-    string memory url = "Not description";
+    string memory url = "Not url";
     bool isAvailable = true;
-    Apostille memory newApostille = Apostille(id, _name, url, isAvailable);
+    uint timestamp = block.timestamp;
+    string memory privateKey = "my-private-key";
+    bytes32 hash = keccak256(abi.encodePacked(url, privateKey));
 
+    Apostille memory newApostille = Apostille(id, name, url, timestamp, privateKey, isAvailable, hash);
+    
     _createApostille(newApostille);
   }
 
